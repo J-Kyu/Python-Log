@@ -1,7 +1,9 @@
-from .  import _defaults as DEFAULTS
-import inspect 
+from . import _defaults as DEFAULTS
+from ._PFileHandler import PFileHandler
 
-import logging
+import inspect 
+import datetime
+import logging.handlers
 import os
 
 
@@ -17,7 +19,7 @@ class PythonLog:
         # get root  logger 
         self.logger = logging.getLogger() # name of logger
 
-    def add(self,level = DEFAULTS.PLOG_NOTSET_NO , msgFormat = DEFAULTS.PLOG_FORMAT_MSG, dateFormat = DEFAULTS.PLOG_FORMAT_DATE, fileName = None): 
+    def add(self,level = DEFAULTS.PLOG_NOTSET_NO , msgFormat = DEFAULTS.PLOG_FORMAT_MSG, dateFormat = DEFAULTS.PLOG_FORMAT_DATE, fileName = None, **kwargs): 
             '''
             Add method  handler to logger
             There are 2 handler:
@@ -43,19 +45,22 @@ class PythonLog:
             DEBUG = 10
             NOTSET = 0
             '''
-            print(level)
             # set format of logger
             logFormatter = logging.Formatter(msgFormat,dateFormat)
 
             # set file handler
             if fileName != None:
-                fullPath = '{0}/{1}'.format(self.logPath,fileName)
-                fileHandler = logging.FileHandler(fullPath)
-                fileHandler.setFormatter(logFormatter)
-                fileHandler.setLevel(level)
-                self.logger.addHandler(fileHandler)
 
+                # !vioilating SRP
+                if 'rotation' in kwargs:
+                    # rotating file handler for MB size
+                    pFileHandler = PFileHandler(fileName, rotation = kwargs['rotation'])
+                    self.logger.addHandler(pFileHandler.GetFileHandler())
 
+                # file handler
+                else:
+                    pFileHandler = PFileHandler(fileName)
+                    self.logger.addHandler(pFileHandler.GetFileHandler())
            
             # set stream handler
             streamHandler = logging.StreamHandler()

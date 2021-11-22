@@ -18,10 +18,11 @@ YELLOW = '\033[33m'
 MAGENTA = '\033[35m' 
 WHITE = '\033[37m' 
 
-
+# format
 PLOG_FORMAT_MSG = '[%(asctime)s ]%(_module)-12s|%(levelname)-8s| %(message)s'
 PLOG_FORMAT_DATE = '%Y-%m-%d %H:%M:%S'
 
+# level
 PLOG_CRITICAL_NO = 50 # 50
 PLOG_CRITICAL_ICON = u'\U0001F480'
 
@@ -40,5 +41,10 @@ PLOG_DEBUG_ICON = u'\U0001F41E'
 
 PLOG_NOTSET_NO = 0 #0
 PLOG_NOTSET_ICON = u'\U0001F47D'
+
+
+# unit
+PLOG_UNIT_SIZE = ['B','KB','MB','GB']
+PLOG_UNIT_TIME = ['SECOND','MINUTE','HOUR','DAY','WEEK',':']
 
 
