@@ -63,10 +63,10 @@ class PythonLog:
                     self.logger.addHandler(pFileHandler.GetFileHandler())
            
             # set stream handler
-            streamHandler = logging.StreamHandler()
-            streamHandler.setFormatter(logFormatter)
-            streamHandler.setLevel(level)
-            self.logger.addHandler(streamHandler)
+            #streamHandler = logging.StreamHandler()
+            #streamHandler.setFormatter(logFormatter)
+            #streamHandler.setLevel(level)
+            #self.logger.addHandler(streamHandler)
 
 
     '''
