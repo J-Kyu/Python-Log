@@ -50,3 +50,38 @@ PLOG_UNIT_SIZE = ['B','KB','MB','GB']
 PLOG_UNIT_TIME = ['SECOND','MINUTE','HOUR','DAY','WEEK',':']
 
 
+def CheckParameters(**kwargs):
+
+	# filename
+	if 'filename' in kwargs:
+		filename = kwargs['filename']
+	else:
+		filename = 'log.log'
+
+
+	# set format of logger
+	if 'format' in kwargs:
+		format = kwargs['format']
+	else:
+		format = PLOG_FORMAT_MSG
+
+	if 'datefmt' in kwargs:
+		datefmt = kwargs['datefmt']
+	else:
+		datefmt =PLOG_FORMAT_DATE
+
+	if 'filter' in kwargs:
+		filter = kwargs['filter'] 
+	else:
+		filter = (lambda record : True)
+	# level
+	if 'level' in kwargs:
+
+		if kwargs['level'] in PLOG_LEVEL_DICT:
+			level = PLOG_LEVEL_DICT[kwargs['level']]
+		elif isinstance(kwargs['level'],int):
+			level = kwargs['level']
+		else:
+			raise Exception('WrongLevelInput')
+
+	return filename, format, datefmt, level, filter

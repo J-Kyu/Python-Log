@@ -2,10 +2,10 @@
 <br />
 
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+    <img src="images/plog_icon.png" alt="Logo" width="100" height="100">
   <h3 align="center">Python-Log</h3>
+
+
 
 
 
@@ -101,6 +101,7 @@
    ```
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 > 기본적으로 root logger의 level 수준은 warning이다. 그렇기 때문에 logging.basicConfig를 설정하지 않으면 기본 format에 warning이상의 log는 terminal에 출려이 된다.
@@ -113,7 +114,7 @@
 >
 > 
 
-### set
+## addStreamHandler
 
 > 기본적으로 root logger의 level 수준은 warning이다. 그리고 config
 >
@@ -123,7 +124,7 @@
 
   
 
-### addFileHandler
+## addFileHandler
 
 > Add Handler
 
@@ -137,9 +138,15 @@
 |          |      |
 |          |      |
 
+### Rotation
 
 
 
+### Filter
+
+> Filter는 record의 정보를 토대로 함수를 정의하여 추가할 수 있다. 함수는 record에 대하여 boolean으로 값을 반환하는 함수여야 하며, 이것을 통해 log를 filtering할 수 있다.
+>
+> :warning: 단, filter에 몇가지 문제점이 존재한다. filter를 통해 log로 전달되는 record(LogRecord)에 접근이 가능하지만, 실제로 호출되는 logger.info()..등등의 함수는 PythonLog를 통하여 logging.info()가 호출이 된다. 즉, lineno혹은 filename과 같이 추가적인 정보를 가져오는 경우 올바르지 않는 값이 전달된다. 고로 아직은 msg에 대한 내용만 filtering 할 수 있다.
 
 
 
@@ -200,5 +207,5 @@ Project Link: [https://github.com/J-Kyu/Python-Log](https://github.com/J-Kyu/Pyt
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* 
+* [filter](https://docs.python.org/ko/3/library/logging.html#logrecord-objects)
 

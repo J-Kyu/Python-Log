@@ -1,5 +1,5 @@
-
 from . import _defaults as DEFAULTS
+from ._PFilter import PFilter
 
 import logging
 
@@ -8,32 +8,17 @@ class PStreamHandler:
 
 	def __init__(self,**kwargs):
 
-		if 'format' in kwargs:
-			format = kwargs['foramt']
-		else:
-			format = DEFAULTS.PLOG_FORMAT_MSG
+		# get valid parameters
+		filename, format, datefmt, level,filter = DEFAULTS.CheckParameters(**kwargs)
 
-		if 'datefmt' in kwargs:
-			datefmt = kwargs['datefmt']
-		else:
-			datefmt = DEFAULTS.PLOG_FORMAT_DATE
-
-		if 'level' in kwargs:
-
-			if kwargs['level'] in DEFAULTS.PLOG_LEVEL_DICT:
-				level = DEFAULTS.PLOG_LEVEL_DICT[kwargs['level']]
-			elif isinstance(kwargs['level'],int):
-				level = kwargs['level']
-			else:
-				raise Exception('WrongLevelInput')
-		else:
-			level = DEFAULTS.PLOG_INFO_NO
-
-		
 		logFormatter = logging.Formatter(format,datefmt)
 		self.streamHandler = logging.StreamHandler()
 		self.streamHandler.setFormatter(logFormatter)
 		self.streamHandler.setLevel(level)
+
+		# set filter
+		filterObject = PFilter(filter)
+		self.streamHandler.addFilter(filterObject)
 
 	def GetStreamHandler(self):
 		return self.streamHandler

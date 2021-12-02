@@ -2,6 +2,8 @@ from ._PRotatingFileHandler import PRotatingFileHandler
 from ._PTimedFileHandler import PTimedFileHandler
 from ._PBasicFileHandler import PBasicFileHandler
 
+from ._PFilter import PFilter
+
 from . import _defaults as DEFAULTS
 
 import logging
@@ -13,33 +15,8 @@ class PFileHandler:
 
         self.fileHandler = None
 
-        # filename
-        if 'filename' in kwargs:
-            filename = kwargs['filename']
-        else:
-            filename = 'log.log'
-
-
-        # set format of logger
-        if 'format' in kwargs:
-            format = kwargs['format']
-        else:
-            format = DEFAULTS.PLOG_FORMAT_MSG
-
-        if 'datefmt' in kwargs:
-            datefmt = kwargs['datefmt']
-        else:
-            datefmt = DEFAULTS.PLOG_FORMAT_DATE
-
-        # level
-        if 'level' in kwargs:
-
-            if kwargs['level'] in DEFAULTS.PLOG_LEVEL_DICT:
-                level = DEFAULTS.PLOG_LEVEL_DICT[kwargs['level']]
-            elif isinstance(kwargs['level'],int):
-                level = kwargs['level']
-            else:
-                raise Exception('WrongLevelInput')
+        # get valid parameters
+        filename, format, datefmt, level, filter = DEFAULTS.CheckParameters(**kwargs)
 
         # check if filehandler require rotation option
         if 'rotation' in kwargs:
@@ -62,7 +39,9 @@ class PFileHandler:
 
         # set level
         self.fileHandler.GetFileHandler().setLevel(level)
-        
+        # set filter
+        filterObject = PFilter(filter)
+        self.fileHandler.GetFileHandler().addFilter(filterObject)
 
     def _IsSharingAnyElement(self, l1,wrd):
         '''

@@ -18,7 +18,7 @@ class PythonLog:
                     datefmt=DEFAULTS.PLOG_FORMAT_DATE)
  
         # get root  logger 
-        self.logger = logging.getLogger() # name of logger
+        self.logger = logging.getLogger('') # name of logger
 
         # add null handler 
         self.__AddNullHandler()
@@ -31,7 +31,6 @@ class PythonLog:
         #print(logging.getLogger().handlers)
         print(self.logger.handlers)
 
-
     def addStreamHandler(self, **kwargs):
         '''
         Default root logger Setting
@@ -43,35 +42,30 @@ class PythonLog:
         pStreamHandler = PStreamHandler(**kwargs)
         self.logger.addHandler(pStreamHandler.GetStreamHandler())
 
+
     def addFileHandler(self,**kwargs): 
-            '''
-            Add method  handler to logger
-            There are 2 handler:
-                1. Stream Handler
-                2. File Handler
-            This method will give style on the log.
+        '''
+        Add method  handler to logger
+        There are 2 handler:
+            1. Stream Handler
+            2. File Handler
+        This method will give style on the log.
 
 
-            Configure format, rotation, filter, serilaize backtrace, diagnose, catch of log
-            each add will generate cycle of a log
+        Configure format, rotation, filter, serilaize backtrace, diagnose, catch of log
+        each add will generate cycle of a log
 
-            but for now, we configure format and rotation of logger.
+        but for now, we configure format and rotation of logger.
 
-            1. Format and Rotation
-            2. Filter and backtrace
-            3. Colorized
-            4. Catch
+        1. Format and Rotation
+        2. Filter and backtrace
+        3. Colorized
+        4. Catch
 
-            CRITICAL = 50
-            ERROR = 40
-            WARNING = 30
-            INFO = 20
-            DEBUG = 10
-            NOTSET = 0
-            '''
-            # set file handler
-            pFileHandler = PFileHandler(**kwargs)
-            self.logger.addHandler(pFileHandler.GetFileHandler())
+        '''
+        # set file handler
+        pFileHandler = PFileHandler(**kwargs)
+        self.logger.addHandler(pFileHandler.GetFileHandler())
 
       
 
@@ -92,7 +86,7 @@ class PythonLog:
 
  
     def critical(self,log):
-        d = { '_module' : self.__GetCalleeModule() }
+        d = { '_module' : self.__GetCalleeModule()}
         self.logger.critical(log, extra = d)
 
     def error(self, log):
