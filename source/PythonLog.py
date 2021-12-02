@@ -1,25 +1,49 @@
 from . import _defaults as DEFAULTS
 from ._PFileHandler import PFileHandler
+from ._PStreamHandler import PStreamHandler
 
 import inspect 
 import datetime
 import logging.handlers
 import os
-
+import sys
 
 class PythonLog:
     def __init__(self):
         self.logPath = os.path.dirname(__file__)+"/.."
 
-        # set root logger
+        # set default root logger
         logging.basicConfig(level=logging.DEBUG,
                     format=DEFAULTS.PLOG_FORMAT_MSG,
                     datefmt=DEFAULTS.PLOG_FORMAT_DATE)
-
+ 
         # get root  logger 
         self.logger = logging.getLogger() # name of logger
 
-    def add(self,level = DEFAULTS.PLOG_NOTSET_NO , msgFormat = DEFAULTS.PLOG_FORMAT_MSG, dateFormat = DEFAULTS.PLOG_FORMAT_DATE, fileName = None, **kwargs): 
+        # add null handler 
+        self.__AddNullHandler()
+
+        # remove default stream handler
+        # For now, only null handler is handling logger (stream or file handler should be added)
+        self.logger.removeHandler(self.logger.handlers[0])
+
+    def temp(self):
+        #print(logging.getLogger().handlers)
+        print(self.logger.handlers)
+
+
+    def addStreamHandler(self, **kwargs):
+        '''
+        Default root logger Setting
+
+        this method will check parameters and set valid variable for logger
+        Default Stream Handler will be added
+        '''
+        # set stream handler
+        pStreamHandler = PStreamHandler(**kwargs)
+        self.logger.addHandler(pStreamHandler.GetStreamHandler())
+
+    def addFileHandler(self,**kwargs): 
             '''
             Add method  handler to logger
             There are 2 handler:
@@ -45,28 +69,20 @@ class PythonLog:
             DEBUG = 10
             NOTSET = 0
             '''
-            # set format of logger
-            logFormatter = logging.Formatter(msgFormat,dateFormat)
-
             # set file handler
-            if fileName != None:
+            pFileHandler = PFileHandler(**kwargs)
+            self.logger.addHandler(pFileHandler.GetFileHandler())
 
-                # !vioilating SRP
-                if 'rotation' in kwargs:
-                    # rotating file handler for MB size
-                    pFileHandler = PFileHandler(fileName, rotation = kwargs['rotation'])
-                    self.logger.addHandler(pFileHandler.GetFileHandler())
+      
 
-                # file handler
-                else:
-                    pFileHandler = PFileHandler(fileName)
-                    self.logger.addHandler(pFileHandler.GetFileHandler())
-           
-            # set stream handler
-            #streamHandler = logging.StreamHandler()
-            #streamHandler.setFormatter(logFormatter)
-            #streamHandler.setLevel(level)
-            #self.logger.addHandler(streamHandler)
+
+    def __AddNullHandler(self):
+        '''
+        Default Handler
+        '''
+        self.logger.addHandler(logging.NullHandler())
+
+
 
 
     '''

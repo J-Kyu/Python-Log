@@ -22,6 +22,7 @@ WHITE = '\033[37m'
 PLOG_FORMAT_MSG = '[%(asctime)s ]%(_module)-12s|%(levelname)-8s| %(message)s'
 PLOG_FORMAT_DATE = '%Y-%m-%d %H:%M:%S'
 
+
 # level
 PLOG_CRITICAL_NO = 50 # 50
 PLOG_CRITICAL_ICON = u'\U0001F480'
@@ -42,6 +43,7 @@ PLOG_DEBUG_ICON = u'\U0001F41E'
 PLOG_NOTSET_NO = 0 #0
 PLOG_NOTSET_ICON = u'\U0001F47D'
 
+PLOG_LEVEL_DICT = {'critical':PLOG_CRITICAL_NO, 'error': PLOG_ERROR_NO, 'warning':PLOG_WARNING_NO, 'info':PLOG_INFO_NO,'debug':PLOG_DEBUG_NO ,'none':PLOG_NOTSET_NO}
 
 # unit
 PLOG_UNIT_SIZE = ['B','KB','MB','GB']

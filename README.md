@@ -103,6 +103,48 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+> 기본적으로 root logger의 level 수준은 warning이다. 그렇기 때문에 logging.basicConfig를 설정하지 않으면 기본 format에 warning이상의 log는 terminal에 출려이 된다.
+>
+> 이것을 방지하기 위해(add stream handler를 설정하는 경우에만 terminal에 나에게 하기 위해) logging.basicConfig를 의도적으로 설정하여 stream handler를 등록하게 만든다. 이후 해당 handler를 삭제함으로서 기본으로 제공되는 stream handler를 없앨 수 있다.
+>
+> 또한, NullHandler를 추가하지 않으면 Logger에서 handler가 아무것도 없는 것으로 판단하여 default handler로 log를 출력한다. 
+>
+> 결과적으로, logging.basicConfig를 생성하고 NullHandler를 추가한다음, removeHandler를 통해 streamHandler를 삭제하면 nullHandler가 처음 시작하기 적절한 로그가 될 수 있다.  이것을 기준으로 여러 handler를 추가하고 삭제하며 logger를 관리하자.
+>
+> 
+
+### set
+
+> 기본적으로 root logger의 level 수준은 warning이다. 그리고 config
+>
+> Config Default Stream Handler
+
+* Logger에 기본적인 stream handler에 대하여 설정한다.
+
+  
+
+### addFileHandler
+
+> Add Handler
+
+|          |      |
+| -------- | ---- |
+| format   |      |
+| datefmt  |      |
+| filename |      |
+| rotation |      |
+|          |      |
+|          |      |
+|          |      |
+
+
+
+
+
+
+
+
+
 ```python
 from source import logger
 
